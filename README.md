@@ -1,6 +1,6 @@
 # Js Developer test task
 
-> Building a Javascriopt game
+> Building a Javascriopt Drag and Drop game
 
 Instructions:
 
