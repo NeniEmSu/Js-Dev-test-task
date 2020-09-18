@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.heading {
+  margin: 62px auto 0;
+  display: flex;
+  gap: 40px;
+  text-align: center;
+  justify-content: center;
+}
+
+.heading .block > h1 {
+  font-weight: 600;
+  font-size: 54px;
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.heading .block > p {
+  font-weight: 600;
+  font-size: 24px;
+  color: #000;
+  margin: 22px auto;
+  text-transform: uppercase;
+}
+
+.heading .block > div {
+  display: flex;
+  gap: 5px;
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.score {
+  font-weight: 600;
+  font-size: 54px;
+  text-align: center;
+  color: #000;
+}
+
+.field {
+  width: 1200px;
+  height: 640px;
+  border-radius: 20px;
+  background: #709b5e;
+  box-shadow: 0px 21px 99px rgba(0, 0, 0, 0.36);
+  margin: 26px auto;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+#left-post,
+#right-post {
+  width: 150px;
+  height: 382px;
+  border: none;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: #bdceb6;
+}
+
+hr {
+  width: 0px;
+  height: 641px;
+  background: transparent;
+  border: 7px solid #bdceb6;
+}
+
+.center-circle,
+.center-spot {
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.center-circle {
+  width: 176px;
+  height: 176px;
+  background: transparent;
+  border: 7px solid #bdceb6;
+}
+
+.center-spot {
+  width: 28px;
+  height: 28px;
+  background: #bdceb6;
+}
+
+.ball {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: #ffffff;
+  line-height: 42px;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
+  background-color: black;
+  text-transform: uppercase;
+}
