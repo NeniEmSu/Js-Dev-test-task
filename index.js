@@ -1,7 +1,19 @@
 const FIELD = document.querySelector('.field');
 const BALL_ELEMENTS = [['div', '#214BF2'], ['span', '#1CECBB'], ['p', '#E58F1F'], ['a', '#E23FB7'], ['b', '#EBFB10'], ['i', '#75E23F']];
+
 const LEFT_POST = document.querySelector('#left-post');
 const RIGHT_POST = document.querySelector('#right-post');
+
+const LEFT_BALLS = document.querySelector('.left-balls');
+const RIGHT_BALLS = document.querySelector('.right-balls');
+
+let leftScore = document.querySelector('#left-score');
+let rightScore = document.querySelector('#right-score');
+
+let ballsInLeft = [['div', '#214BF2'], ['span', '#1CECBB']];
+let ballsInRight = [['p', '#E58F1F'], ['a', '#E23FB7']];
+
+// adding balls to field
 
 BALL_ELEMENTS.forEach(element => {
     const NODE = document.createElement(element[0]);
@@ -17,6 +29,43 @@ BALL_ELEMENTS.forEach(element => {
     DRAGABLE_El.setAttribute('draggable', true);
 })
 
+// Updating score values and displaying ball in post
+
+function displayScoredBalls(sideArray, sideToAppend, sideClass) {
+    sideArray.forEach(element => {
+        const NODE = document.createElement(element[0]);
+        const NODE_TEXT = document.createTextNode(element[0]);
+
+        NODE.appendChild(NODE_TEXT);
+
+        sideToAppend.appendChild(NODE);
+
+        const ADDED_EL = document.querySelector(`${sideClass} ${element[0]}`);
+
+        ADDED_EL.classList.add("ball");
+        ADDED_EL.style.backgroundColor = element[1];
+    });
+};
+
+function updateScore() {
+    leftScore.innerHTML = ballsInLeft.length;
+    rightScore.innerHTML = ballsInRight.length;
+
+    displayScoredBalls(ballsInLeft, LEFT_BALLS, '.left-balls');
+    displayScoredBalls(ballsInRight, RIGHT_BALLS, '.right-balls');
+};
+
+ballsInLeft.push(BALL_ELEMENTS[5]);
+ballsInRight.push(BALL_ELEMENTS[4]);
+
+function getDistance(x1, y1, x2, y2) {
+    let xDistance = x2 - x1;
+    let yDistance = y2 - y1;
+
+    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2))
+}
+
+// Setting drag and drop class
 
 function Draggable(elem, bgColor) {
     let el = document.querySelector(`.field ${elem}`),
@@ -30,14 +79,14 @@ function Draggable(elem, bgColor) {
         this.initPosition();
         this.events();
     };
-    
+
     this.initPosition = function () {
-        el.style.cursor= 'move';
+        el.style.cursor = 'move';
         el.style.position = "absolute";
         el.style.backgroundColor = bgColor;
         // Math.round(6.5625 * 10000) to handle js decimal calculation errors
-        el.style.top = `calc(${Math.floor(Math.random() * ((Math.round(100 * 10000) - Math.round(6.5625 * 10000) + Math.round(1 * 10000)) ) + Math.round(6.5625 * 10000)) / 10000}% - 42px)`;
-        el.style.left = `calc(${Math.floor(Math.random() * ((Math.round(100 * 10) - Math.round(3.5 * 10) + Math.round(1 * 10)) ) + Math.round(3.5 * 10)) / 10}% - 42px)`;
+        el.style.top = `calc(${Math.floor(Math.random() * ((Math.round(100 * 10000) - Math.round(6.5625 * 10000) + Math.round(1 * 10000))) + Math.round(6.5625 * 10000)) / 10000}% - 42px)`;
+        el.style.left = `calc(${Math.floor(Math.random() * ((Math.round(100 * 10) - Math.round(3.5 * 10) + Math.round(1 * 10))) + Math.round(3.5 * 10)) / 10}% - 42px)`;
     };
     //events for the element
     this.events = function () {
@@ -81,6 +130,10 @@ function Draggable(elem, bgColor) {
 
                 el.style.top = offsetY + "px";
                 el.style.left = offsetX + "px";
+
+                let left_post_pos = LEFT_POST.getBoundingClientRect()
+                
+                console.log(getDistance(offsetX, offsetY, left_post_pos.x, left_post_pos.y))
             }
         });
     };
@@ -91,6 +144,10 @@ function Draggable(elem, bgColor) {
     };
 
     this.init();
-}
+};
 
+// Calling draggable class
 BALL_ELEMENTS.forEach(element => new Draggable(element[0], element[1]));
+
+updateScore();
+
