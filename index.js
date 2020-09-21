@@ -10,8 +10,8 @@ const RIGHT_BALLS = document.querySelector('.right-balls');
 let leftScore = document.querySelector('#left-score');
 let rightScore = document.querySelector('#right-score');
 
-let ballsInLeft = [['div', '#214BF2'], ['span', '#1CECBB']];
-let ballsInRight = [['p', '#E58F1F'], ['a', '#E23FB7']];
+let ballsInLeft = [];
+let ballsInRight = [];
 
 // adding balls to field
 
@@ -55,8 +55,8 @@ function updateScore() {
     displayScoredBalls(ballsInRight, RIGHT_BALLS, '.right-balls');
 };
 
-ballsInLeft.push(BALL_ELEMENTS[5]);
-ballsInRight.push(BALL_ELEMENTS[4]);
+// ballsInLeft.push(BALL_ELEMENTS[5]);
+// ballsInRight.push(BALL_ELEMENTS[4]);
 
 function getDistance(x1, y1, x2, y2) {
     let xDistance = x2 - x1;
@@ -132,8 +132,30 @@ function Draggable(elem, bgColor) {
                 el.style.left = offsetX + "px";
 
                 let left_post_pos = LEFT_POST.getBoundingClientRect()
-                
-                console.log(getDistance(offsetX, offsetY, left_post_pos.x, left_post_pos.y))
+                let elementWithinLeft = false
+
+                if (offsetX < left_post_pos.x) elementWithin = false;        // left edge
+                else if (offsetX > left_post_pos.x + left_post_pos.width) elementWithin = false;     // right edge
+
+                if (offsetY < left_post_pos.y) elementWithin = false;       // top edge
+                else if (offsetY > left_post_pos.y + left_post_pos.height) elementWithin = false;
+
+                function exists(arr, search) {
+                    return arr.some(row => row.includes(search));
+                }
+
+                if (!elementWithinLeft) {
+                    if (exists(ballsInLeft, el.tagName) !== true) {
+                        ballsInLeft.push([el.tagName, el.style.backgroundColor])
+                    }
+                }
+                else {
+                    if (exists(ballsInLeft, el.tagName) !== true) {
+                        ballsInLeft.slice(ballsInLeft.indexOf([[el.tagName, el.style.backgroundColor]]), 1)
+                    }
+                }
+
+                updateScore();
             }
         });
     };
